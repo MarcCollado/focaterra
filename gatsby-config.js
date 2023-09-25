@@ -1,23 +1,20 @@
 /**
- * Configure your Gatsby site with this file.
- *
- * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/
- */
-
-/**
  * @type {import('gatsby').GatsbyConfig}
  */
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `Foc a Terra`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `Àlex R. Bacardit i Marc Collado`,
+      summary: `Un pòdcast de minories, en català, que t’acostarà a la tecnologia tal com raja`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    description: `La pàgina web oficial de Foc a Terra.`,
+    siteUrl: `https://focaterra.netlify.app`,
     social: {
-      twitter: `kylemathews`,
+      feed: `https://media.rss.com/focaterra/feed.xml`,
+      podcast: `https://rss.com/podcasts/focaterra/`,
+      twitter: `https://x.com/foc_a_terra`,
+      youtube: `https://www.youtube.com/playlist?list=PLyV47qReKfzNJl-kdnl6Ck0NuyeW7ffGs`,
     },
   },
   plugins: [
@@ -76,7 +73,7 @@ module.exports = {
         feeds: [
           {
             serialize: ({ query: { site, allMarkdownRemark } }) => {
-              return allMarkdownRemark.nodes.map(node => {
+              return allMarkdownRemark.nodes.map((node) => {
                 return Object.assign({}, node.frontmatter, {
                   description: node.excerpt,
                   date: node.frontmatter.date,
@@ -102,23 +99,32 @@ module.exports = {
               }
             }`,
             output: "/rss.xml",
-            title: "Gatsby Starter Blog RSS Feed",
+            title: "El blog de Foc a Terra",
           },
         ],
+      },
+    },
+    // IMPORT EXTERNAL RSS FEED
+    // https://github.com/mottox2/gatsby-source-rss-feed
+    // FEED: FOC A TERRA
+    {
+      resolve: `gatsby-source-rss-feed`,
+      options: {
+        url: `https://media.rss.com/focaterra/feed.xml`,
+        name: `FocATerra`,
       },
     },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `Gatsby`,
+        name: `Foc a Terra`,
+        short_name: `Foc a Terra`,
         start_url: `/`,
         background_color: `#ffffff`,
-        // This will impact how browsers show your PWA/website
         // https://css-tricks.com/meta-theme-color-and-trickery/
         // theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/fat-icon.jpg`,
       },
     },
   ],
