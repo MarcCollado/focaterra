@@ -7,7 +7,6 @@ const Bio = () => {
     query BioQuery {
       site {
         siteMetadata {
-          title
           author
           description
           social {
@@ -35,7 +34,7 @@ const Bio = () => {
         alt="Profile picture"
       />
       <p>
-        {description} — amb <strong>{author.name}</strong>.<br></br>
+        {description} — amb <strong>{author}</strong>.<br></br>
         <a href={social?.twitter || ``}>
           De fet, ens podries seguir a Twitter.
         </a>
