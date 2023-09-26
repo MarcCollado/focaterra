@@ -1,33 +1,46 @@
-import * as React from "react"
-import { Link, graphql } from "gatsby"
+import * as React from 'react';
+import { Link, graphql } from 'gatsby';
 
-import Bio from "../components/bio"
-import Layout from "../components/layout"
-import Seo from "../components/seo"
+import Bio from '../components/bio';
+import Layout from '../components/layout';
+import Seo from '../components/seo';
+
+import { trimmer } from '../utils/helpers';
 
 const BlogIndex = ({ data, location }) => {
-  const siteTitle = data.site.siteMetadata?.title || `Title`
-  const posts = data.allMarkdownRemark.nodes
-
-  if (posts.length === 0) {
-    return (
-      <Layout location={location} title={siteTitle}>
-        <Bio />
-        <p>
-          No blog posts found. Add markdown posts to "content/blog" (or the
-          directory you specified for the "gatsby-source-filesystem" plugin in
-          gatsby-config.js).
-        </p>
-      </Layout>
-    )
-  }
+  const posts = data.allMarkdownRemark.nodes;
+  const episodes = data.allFeedFocATerra.edges;
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout location={location} title="">
       <Bio />
       <ol style={{ listStyle: `none` }}>
-        {posts.map(post => {
-          const title = post.frontmatter.title || post.fields.slug
+        {episodes.map((e) => {
+          return (
+            <li key={e.node.id}>
+              <article className="post-list-item">
+                <header>
+                  <h2>
+                    <Link to={e.node.link} itemProp="url">
+                      <span itemProp="headline">{e.node.title}</span>
+                    </Link>
+                  </h2>
+                  <small>{e.node.isoDate}</small>
+                </header>
+                <section>
+                  <p itemProp="description">
+                    {trimmer(e.node.contentSnippet).description}
+                  </p>
+                </section>
+              </article>
+            </li>
+          );
+        })}
+      </ol>
+
+      {/* <ol style={{ listStyle: `none` }}>
+        {posts.map((post) => {
+          const title = post.frontmatter.title || post.fields.slug;
 
           return (
             <li key={post.fields.slug}>
@@ -54,21 +67,14 @@ const BlogIndex = ({ data, location }) => {
                 </section>
               </article>
             </li>
-          )
+          );
         })}
-      </ol>
+      </ol> */}
     </Layout>
-  )
-}
-
-export default BlogIndex
-
-/**
- * Head export to define metadata for the page
- *
- * See: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
- */
-export const Head = () => <Seo title="All posts" />
+  );
+};
+export default BlogIndex;
+export const Head = () => <Seo title="Tots els episodis" />;
 
 export const pageQuery = graphql`
   {
@@ -90,5 +96,17 @@ export const pageQuery = graphql`
         }
       }
     }
+    # allMarkdownRemark(
+    #   filter: {
+    #     fileAbsolutePath: { regex: "/src/media/markdown/posts/" }
+    #     frontmatter: { tags: { nin: ["drafts"] } }
+    #   }
+    #   sort: { frontmatter: { date: DESC } }
+    # ) {
+    #   ...allPosts
+    # }
+    allFeedFocATerra(sort: { isoDate: DESC }) {
+      ...allFocATerraEpisodes
+    }
   }
-`
+`;
