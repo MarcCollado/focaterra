@@ -28,8 +28,8 @@ const Bio = () => {
         layout="fixed"
         formats={['auto', 'webp', 'avif']}
         src="../images/fat-art.jpg"
-        width={70}
-        height={70}
+        width={75}
+        height={75}
         quality={95}
         alt="Profile picture"
       />
