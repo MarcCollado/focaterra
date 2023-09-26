@@ -1,14 +1,8 @@
-/**
- * @type {import('gatsby').GatsbyConfig}
- */
 module.exports = {
   siteMetadata: {
     title: `Foc a Terra`,
-    author: {
-      name: `Àlex R. Bacardit i Marc Collado`,
-      summary: `Un pòdcast de minories, en català, que t’acostarà a la tecnologia tal com raja`,
-    },
-    description: `La pàgina web oficial de Foc a Terra.`,
+    author: `Àlex R. Bacardit i Marc Collado`,
+    description: `Un pòdcast de minories, en català, que t’acostarà a la tecnologia tal com raja`,
     siteUrl: `https://focaterra.netlify.app`,
     social: {
       feed: `https://media.rss.com/focaterra/feed.xml`,
@@ -79,9 +73,9 @@ module.exports = {
                   date: node.frontmatter.date,
                   url: site.siteMetadata.siteUrl + node.fields.slug,
                   guid: site.siteMetadata.siteUrl + node.fields.slug,
-                  custom_elements: [{ "content:encoded": node.html }],
-                })
-              })
+                  custom_elements: [{ 'content:encoded': node.html }],
+                });
+              });
             },
             query: `{
               allMarkdownRemark(sort: {frontmatter: {date: DESC}}) {
@@ -98,8 +92,8 @@ module.exports = {
                 }
               }
             }`,
-            output: "/rss.xml",
-            title: "El blog de Foc a Terra",
+            output: '/rss.xml',
+            title: 'El blog de Foc a Terra',
           },
         ],
       },
@@ -121,11 +115,10 @@ module.exports = {
         short_name: `Foc a Terra`,
         start_url: `/`,
         background_color: `#ffffff`,
-        // https://css-tricks.com/meta-theme-color-and-trickery/
         // theme_color: `#663399`,
         display: `minimal-ui`,
         icon: `src/images/fat-icon.jpg`,
       },
     },
   ],
-}
+};
