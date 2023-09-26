@@ -1,12 +1,5 @@
-/**
- * SEO component that queries for data with
- * Gatsby's useStaticQuery React hook
- *
- * See: https://www.gatsbyjs.com/docs/how-to/querying-data/use-static-query/
- */
-
-import * as React from "react"
-import { useStaticQuery, graphql } from "gatsby"
+import * as React from 'react';
+import { useStaticQuery, graphql } from 'gatsby';
 
 const Seo = ({ description, title, children }) => {
   const { site } = useStaticQuery(
@@ -16,35 +9,48 @@ const Seo = ({ description, title, children }) => {
           siteMetadata {
             title
             description
-            social {
-              twitter
-            }
           }
         }
       }
     `
-  )
+  );
 
-  const metaDescription = description || site.siteMetadata.description
-  const defaultTitle = site.siteMetadata?.title
+  const defaultTitle = site.siteMetadata.title;
+  const defaultDescription = site.siteMetadata.description;
 
   return (
     <>
-      <title>{defaultTitle ? `${title} | ${defaultTitle}` : title}</title>
-      <meta name="description" content={metaDescription} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={metaDescription} />
-      <meta property="og:type" content="website" />
-      <meta name="twitter:card" content="summary" />
+      <title>{title ? `${title} - ${defaultTitle}` : defaultTitle}</title>
       <meta
-        name="twitter:creator"
-        content={site.siteMetadata?.social?.twitter || ``}
+        name="description"
+        content={description ? description : defaultDescription}
       />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={metaDescription} />
+
+      {/* OG */}
+      <meta
+        property="og:title"
+        content={title ? `${title} - ${defaultTitle}` : defaultTitle}
+      />
+      <meta
+        property="og:description"
+        content={description ? description : defaultDescription}
+      />
+      <meta property="og:type" content="website" />
+
+      {/* Twitter */}
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:creator" content="@foc_a_terra" />
+      <meta
+        name="twitter:title"
+        content={title ? `${title} - ${defaultTitle}` : defaultTitle}
+      />
+      <meta
+        name="twitter:description"
+        content={description ? description : defaultDescription}
+      />
       {children}
     </>
-  )
-}
+  );
+};
 
-export default Seo
+export default Seo;
